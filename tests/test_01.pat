@@ -1,0 +1,5 @@
+programa miprog ;
+inicio
+{
+}
+fin

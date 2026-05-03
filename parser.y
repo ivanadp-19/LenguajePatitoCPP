@@ -24,5 +24,33 @@ void yyerror(const char *s) { fprintf(stderr, "Error en linea %d: %s\n", yylinen
 
 
 %%
-programa : PROGRAMA ID ';'   { printf("Prorama '%s' aceptado\n", $2); };
+programa : PROGRAMA ID ';' vars_opt funcs_opt INICIO cuerpo FIN
+  	 { printf("Prorama '%s' aceptado\n", $2); }
+  	 ;
+vars_opt : vars_block
+	 |
+	 ;
+funcs_opt:
+	 ;
+vars_block : VARS decl decl_list
+	   |
+	   ;
+decl_list : decl decl_list
+	  |
+	  ;
+decl : id_list ':' tipo ';'
+     ;
+id_list : ID id_list_p
+	;
+id_list_p : ',' ID id_list_p
+	  |
+	  ;
+tipo : ENTERO
+     | FLOTANTE
+     ;
+cuerpo : '{''}'
+       ;
+
+
 %%
+
