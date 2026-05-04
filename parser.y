@@ -70,6 +70,9 @@ estatuto_list : estatuto estatuto_list
 estatuto : asigna
 	 | llamada_stmt
 	 | imprime
+	 | condicion
+	 | ciclo
+	 | '(' estatuto ')'
 	 ;
 asigna : ID '=' expresion ';'
        ;
@@ -90,10 +93,60 @@ imp_arg_list : ',' imp_arg imp_arg_list
 imp_arg : expresion
 	| LETRERO
 	;
-expresion : ID
-	  | CTE_ENT
-	  | CTE_FLOT
-	  ;
+expresion : exp rel_opt
+          ;
+
+rel_opt : op_rel exp
+        |
+        ;
+
+op_rel : '>'
+       | '<'
+       | DISTINTO
+       | IGUAL
+       ;
+
+exp : termino exp_p
+    ;
+
+exp_p : '+' termino exp_p
+      | '-' termino exp_p
+      |
+      ;
+
+termino : factor termino_p
+        ;
+
+termino_p : '*' factor termino_p
+          | '/' factor termino_p
+          |
+          ;
+
+factor : '(' expresion ')'
+       | signo_opt factor_atom
+       ;
+
+signo_opt : '+'
+          | '-'
+          |
+          ;
+
+factor_atom : CTE_ENT
+            | CTE_FLOT
+            | ID factor_idtail
+            ;
+
+factor_idtail : '(' args_opt ')'
+              |
+              ;
+condicion : SI '(' expresion ')' cuerpo sino_opt ';'
+          ;
+sino_opt : SINO cuerpo
+         |
+         ;
+
+ciclo : MIENTRAS '(' expresion ')' HAZ cuerpo ';'
+      ;
 
 %%
 
