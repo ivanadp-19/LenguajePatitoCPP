@@ -62,9 +62,38 @@ param_list_p : ',' param param_list_p
 param : ID ':' tipo
       ;
 
-cuerpo : '{''}'
+cuerpo : '{'estatuto_list'}'
        ;
+estatuto_list : estatuto estatuto_list
+              |
+              ;
+estatuto : asigna
+	 | llamada_stmt
+	 | imprime
+	 ;
+asigna : ID '=' expresion ';'
+       ;
+llamada_stmt : ID '(' args_opt ')' ';'
+	     ;
+args_opt : expresion args_p
+	 |
+	 ;
+args_p : ',' expresion args_p
+       |
+       ;
+imprime : ESCRIBE '(' imp_arg imp_arg_list ')' ';'
+	;
+imp_arg_list : ',' imp_arg imp_arg_list
+	     |
+	     ;
 
+imp_arg : expresion
+	| LETRERO
+	;
+expresion : ID
+	  | CTE_ENT
+	  | CTE_FLOT
+	  ;
 
 %%
 
